@@ -13,7 +13,14 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    #@movies = Movie.all
+    # sort based on params[:sort]
+    @sort_column = params[:sort] || 'id'
+
+    @title_hilite = "hilite" if params[:sort] == 'title'
+    @date_hilite = "hilite" if params[:sort] == 'release_date'
+
+    @movies = Movie.order(@sort_column)
   end
 
   def new
@@ -42,14 +49,6 @@ class MoviesController < ApplicationController
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
-  end
-  
-  def hilight(column)
-    if(params[:order].to_s == column)
-      return 'hilite'
-    else
-      return nil
-    end
   end
 
 end
