@@ -22,7 +22,7 @@ class MoviesController < ApplicationController
     session[:ratings] = params[:ratings].keys if params[:ratings]
     session[:sort] = params[:sort] if params[:sort]
 
-    redirect_to movies_path(ratings: Hash[session[:ratings].map {|r| [r,1]}], sort: session[:sort]) if (session[:ratings] && session[:sort]) && ( params[:ratings].nil? || params[:sort].nil?)
+    redirect_to movies_path(ratings: Hash[session[:ratings].map {|r| [r,1]}], sort: session[:sort]) if  params[:ratings].nil? || params[:sort].nil?
 
     @ratings = session[:ratings]
     @sort = session[:sort]
